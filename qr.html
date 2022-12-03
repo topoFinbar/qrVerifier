@@ -632,8 +632,7 @@ const premium =
  'bae7ec0d-7314-5321-99be-00727e7144bf'];
  
 
-var alreadyScanned = [];
-   
+var alreadyScanned = [];  //dove memorizzo gli id già entrati
 const scanner = new Html5QrcodeScanner('reader' , {
         qrbox: {
             width: 250,
@@ -645,27 +644,26 @@ const scanner = new Html5QrcodeScanner('reader' , {
 scanner.render(success, error);
 
 function success(result){
-	
-    console.log('result: ' + result);
-    checkValue(result);
-    //scanner.clear();
+  //console.log('result: ' + result);
+  checkValue(result);
+  //scanner.clear();
 }
+
 
 function error(err){
     //console.error(err);
+    alert('errore QR scanner, ricarica la pagina :(');
 }
 
 
 /*memorizza id scannerizzato*/
 function store(id){
-	
-  console.log("ho memorizzato: ");
-  console.log(id);
-    alreadyScanned.push(id);
-    sleep(2000);
-    //clearInputID()
+  //console.log("ho memorizzato: ");
+  //console.log(id);
+  alreadyScanned.push(id);
+  sleep(2000);
+  //clearInputID()
 }
-
 
 
 /*tempo per memorizzare*/
@@ -686,6 +684,7 @@ function claerResponse() {
     document.getElementById("status").style.color = "green"
 }
 
+
 function loadingStatus(){
     //change status
     document.getElementById("status").style.color = "orange"
@@ -693,69 +692,39 @@ function loadingStatus(){
 }
 
 
-
-
-
-
-
-
-
-
-
 /*operazioni di verifica*/
 function checkValue(ID){
-
-  console.log('validando: ' +ID)
-  
-if(ID == ''){
-  
+  //console.log('validando: ' +ID)
+  if(ID == ''){
   	//niente
-    
   }else if (alreadyScanned.includes(ID)){
-  
-    console.log('già scannerizzato')
-
+    //console.log('già scannerizzato')
     //change response
     document.getElementById("response").style.color = "red"
     document.getElementById("response").innerHTML  = 'già scannerizzato'
-    
     setTimeout(claerResponse, 2500)
-    
   }else if (maggiorenni.includes(ID) ||  minorenni.includes(ID)){
-  
-    console.log('entra')
-    
+    //console.log('entra')
     //change response
     document.getElementById("response").style.color = "green"
     document.getElementById("response").innerHTML  = 'entra'
-    
-	loadingStatus()
-    
+	  loadingStatus()
     store(ID)
     setTimeout(claerResponse, 2500)
-    
   }else if(premium.includes(ID)){
-  
     //console.log('entra: premium')
-    
     //change response
     document.getElementById("response").style.color = "#FFC725"
     document.getElementById("response").innerHTML  = 'entra: premium'
     loadingStatus()
-    
     store(ID)
     setTimeout(claerResponse, 2500)
-    
   }else{
-  
-    console.log('non valido')
-    
+    //console.log('non valido')
+    //console.log(ID)
     document.getElementById("response").style.color = "red"
     document.getElementById("response").innerHTML  = 'non valido, riscannerizza'
-    
     setTimeout(claerResponse, 2500)
-    //console.log(ID)
-    
   }
 
 }
