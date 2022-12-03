@@ -656,16 +656,13 @@ function error(err){
 }
 
 
-function clearInputID(){
-	  document.getElementById('ID').value = ''
-}
-
 /*memorizza id scannerizzato*/
-function store(scenned){
-    alreadyScanned.push(scenned)
-    sleep(2000)
-  console.log("ho memorizzato: ")
-  console.log(alreadyScanned)
+function store(id){
+	
+  console.log("ho memorizzato: ");
+  console.log(id);
+    alreadyScanned.push(id);
+    sleep(2000);
     //clearInputID()
 }
 
@@ -708,7 +705,6 @@ function loadingStatus(){
 /*operazioni di verifica*/
 function checkValue(ID){
 
-  //ID = document.getElementById("ID").value;
   console.log('validando: ' +ID)
   
 if(ID == ''){
@@ -717,9 +713,8 @@ if(ID == ''){
     
   }else if (alreadyScanned.includes(ID)){
   
-    //console.log('già scannerizzato')
-    //clearInputID()
-    
+    console.log('già scannerizzato')
+
     //change response
     document.getElementById("response").style.color = "red"
     document.getElementById("response").innerHTML  = 'già scannerizzato'
@@ -734,7 +729,7 @@ if(ID == ''){
     document.getElementById("response").style.color = "green"
     document.getElementById("response").innerHTML  = 'entra'
     
-loadingStatus()
+	loadingStatus()
     
     store(ID)
     setTimeout(claerResponse, 2500)
@@ -753,13 +748,12 @@ loadingStatus()
     
   }else{
   
-    //console.log('non valido')
+    console.log('non valido')
     
     document.getElementById("response").style.color = "red"
     document.getElementById("response").innerHTML  = 'non valido, riscannerizza'
     
     setTimeout(claerResponse, 2500)
-    //clearInputID()
     //console.log(ID)
     
   }
