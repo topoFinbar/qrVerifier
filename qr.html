@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="info">
+    <meta name="keywords" content="party">
+    <meta name="author" content="gio">
+
+    <title>
+      
+        last &middot; day 2022 
+      
+    </title>
+
+
+</head>
+
+<body>
+    <main>
+
+        <div id="reader" style="width: 600px;"></div>
+
+    </main>
+
+
+
+    <!-- <script src="https://raw.githubusercontent.com/mebjas/html5-qrcode/master/minified/html5-qrcode.min.js"></script> -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+
+
+<script>
+
+        
+    const scanner = new Html5QrcodeScanner('reader' , {
+        qrbox: {
+            width: 250,
+            height: 250,
+        },
+        fps: 20,
+
+    });
+
+
+    scanner.render(success, error);
+
+
+    function success(result){
+        console.log(result);
+
+        //scanner.clear();
+
+    }
+
+    function error(err){
+        console.error(err);
+    }
+
+
+    </script> 
+
+<!-- 
+<script>
+    var socket = io();
+    function logger(msg) {
+      $("#logger").text(msg);
+    }
+
+    function stream() {
+      var canv = document.getElementById("prev"),
+      context = canv.getContext("2d"),
+      video = document.getElementById("video"),
+      localstream,
+      freq = 10;
+
+      canv.width = 200;//window.innerWidth ;//  800;
+      canv.height = 200;//window.innerHeight;// 400;
+
+      context.width = canv.width;
+      context.height = canv.height;
+
+      function loadCam(stream) {
+        try {
+          this.srcObject = stream;
+        } catch (error) {
+          this.src = window.URL.createObjectURL(stream);
+        }
+        logger("Camera loaded [OKAY]");
+        localstream = stream;
+      }
+
+      function loadFail(stream) {
+        logger("Failed loading camera");
+      }
+
+      function viewVideo(video, context) {
+        context.drawImage(video, 0, 0, context.width, context.height);
+        socket.emit("stream", canv.toDataURL("image/webp"));
+      }
+
+      $(function() {
+        navigator.getUserMedia = navigator.getUserMedia ||
+                           navigator.webkitGetUserMedia ||
+                           navigator.mozGetUserMedia;
+
+        if(navigator.getUserMedia) {
+          navigator.getUserMedia({video: true}, loadCam, loadFail);
+        }
+
+        var duration = 60 * 0.2;//
+        var timer = duration, minutes, seconds;
+
+        var faceStream = setInterval(function() {
+          viewVideo(video, context);
+
+          minutes = parseInt(timer / 60, 10)
+          seconds = parseInt(timer % 60, 10);
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+            if (--timer >= 0) {
+            } else {
+                clearInterval(faceStream);
+                document.getElementById("face-login").style.display = 'inline-block';
+                video.pause();
+                video.src = "";
+                localstream.getTracks()[0].stop();
+                timer = duration;
+                socket.emit("stream-end", '');
+            }
+            logger("Recognizing in: " + minutes + ":" + seconds);
+        }, freq*10);
+      });
+    }
+
+    function view() {
+      document.getElementById("face-login").style.display = 'none';
+
+      stream();
+
+
+      socket.on("stream", function (data) {
+        var img = document.getElementById("img");
+        img.style.display = 'block';
+        img.src = data['img'];
+
+
+        var devRect = document.getElementById("face-detect");
+        var rect = data['rectFace'];
+        if(Object.keys(rect).length !== 0) {
+          devRect.style.display = 'block';
+          devRect.style.top = rect.y + 'px';
+          devRect.style.left = rect.x + 'px';
+          devRect.style.width = rect.w + 'px';
+          devRect.style.height = rect.h + 'px';
+
+        } else {
+          devRect.style.display = 'none';
+
+        }
+      });
+
+      socket.on("stream-end", function (data) {
+        $("#face-login").hide();
+        $("#face-detect").hide();
+        logger("Verifying user...");
+        socket.emit("verify-user", '');
+      });
+
+      socket.on("verify-user", function (data) {
+        $("#face-detect").hide();
+        logger("verified, " + data['name'] + ", accouracy: " + data['accouracy']);
+        console.log(data)
+        if(data['id']) {
+          $("#face-login").hide();
+          $.post("/login", {'auth_key': data['auth_key']}, function(data) {
+            location.reload();
+          })
+        } else {
+          $("#face-login").show();
+        }
+      });
+    }
+
+  </script> -->
+
+</body>
+</html>
+
