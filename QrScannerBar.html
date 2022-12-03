@@ -19,6 +19,7 @@
   <div id="reader" style="width: 600px;"></div>
   <br>
   <h1 id="response"></h1>
+  <h1 id="alert"></h1>
 
   
 <script src="https://unpkg.com/html5-qrcode"></script>
@@ -65,7 +66,8 @@ function sleep(milliseconds) {
 
 function claerResponse() {
 		//change response
-    document.getElementById("response").innerHTML  = ''
+    document.getElementById("response").innerHTML  = '';
+    document.getElementById("alert").innerHTML  = '';
     //change status
     document.getElementById("status").innerHTML = "ready"
     document.getElementById("status").style.color = "green"
@@ -93,7 +95,8 @@ function updateValue(dictToUpdate,ID){
 function checkValue(ID){
   if(ID == ''){	//niente
   }else if( lastID == ID){
-    document.getElementById("response").innerHTML  = 'leva il cell';
+    document.getElementById("alert").innerHTML  = 'leva il cell';
+    sleep(2500);
   }else if (Object.keys(maggiorenniDict).includes(ID) ){ 
 		updateValue(maggiorenniDict,ID);
   }else if (Object.keys(minorenniDict).includes(ID) ){ 
