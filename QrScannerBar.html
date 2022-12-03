@@ -38,7 +38,7 @@ scanner.render(success, error);
 function success(result){
   //console.log('result: ' + result);
   checkValue(result);
-  scanner.stop();
+  //scanner.stop();
 }
 
 
@@ -85,8 +85,8 @@ function updateValue(dictToUpdate,ID){
 	document.getElementById("response").innerHTML  = dictToUpdate[ID];
   sleep(1500);
 	loadingStatus()
-  setTimeout(claerResponse, 2000);
-  scanner.start();
+  setTimeout(claerResponse, 2500);
+  //scanner.start();
 	//add sleep time to give it time to memorize it
 }
 
@@ -94,10 +94,13 @@ function updateValue(dictToUpdate,ID){
 function checkValue(ID){
   if(ID == ''){	//niente
   }else if (Object.keys(maggiorenniDict).includes(ID)){ 
+  sleep(1500);
 		updateValue(maggiorenniDict,ID);
   }else if (Object.keys(minorenniDict).includes(ID)){ 
+  sleep(1500);
 		updateValue(minorenniDict,ID);
   }else if (Object.keys(premiumDict).includes(ID)){ 
+  sleep(1500);
 		updateValue(premiumDict,ID);
   }
 }
