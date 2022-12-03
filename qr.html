@@ -697,7 +697,7 @@ function checkValue(ID){
   //console.log('validando: ' +ID)
   if(ID == ''){
   	//niente
-  }else if (alreadyScanned.includes(ID)){
+  }else if (alreadyScanned.includes(ID) && document.getElementById("response").innerHTML != 'entra'){
     //console.log('già scannerizzato')
     //change response
     document.getElementById("response").style.color = "red"
