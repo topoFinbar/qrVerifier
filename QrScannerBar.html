@@ -68,6 +68,7 @@ function claerResponse() {
 		//change response
     document.getElementById("response").innerHTML  = '';
     document.getElementById("alert").innerHTML  = '';
+    lastID = '';
     //change status
     document.getElementById("status").innerHTML = "ready"
     document.getElementById("status").style.color = "green"
@@ -96,7 +97,7 @@ function checkValue(ID){
   if(ID == ''){	//niente
   }else if( lastID == ID){
     document.getElementById("alert").innerHTML  = 'leva il cell';
-    sleep(2500);
+    setTimeout(claerResponse, 2000);
   }else if (Object.keys(maggiorenniDict).includes(ID) ){ 
 		updateValue(maggiorenniDict,ID);
   }else if (Object.keys(minorenniDict).includes(ID) ){ 
