@@ -85,23 +85,26 @@ function loadingStatus(){
 
 
 function updateValue(dictToUpdate,ID){
-  lastID = ID;
+  //lastID = ID;
 	dictToUpdate[ID] = dictToUpdate[ID] + 1
 	document.getElementById("response").innerHTML  = dictToUpdate[ID];
 
 	loadingStatus();
-  sleep(2500);
+  //sleep(2500);
   claerResponse();
 }
 
 
 function checkValue(ID){
   if(ID == ''){	//niente
-  }else if(lastID == ID){
+  }
+  /*else if(lastID == ID){
     console.log('redo');
     document.getElementById("alert").innerHTML  = 'leva il cell';
-    claerResponse();
-  }else if (Object.keys(maggiorenniDict).includes(ID) ){ 
+    claerResponse();  
+  }
+    */
+else if (Object.keys(maggiorenniDict).includes(ID) ){ 
 		updateValue(maggiorenniDict,ID);
   }else if (Object.keys(minorenniDict).includes(ID) ){ 
 		updateValue(minorenniDict,ID);
