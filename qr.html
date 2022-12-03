@@ -645,8 +645,9 @@ const scanner = new Html5QrcodeScanner('reader' , {
 scanner.render(success, error);
 
 function success(result){
+	
+    console.log('result: ' + result);
     checkValue(result);
-    //console.log(result);
     //scanner.clear();
 }
 
@@ -663,8 +664,8 @@ function clearInputID(){
 function store(){
     alreadyScanned.push(ID)
     sleep(2000)
-  //console.log("ho memorizzato: ")
-  //console.log(alreadyScanned)
+  console.log("ho memorizzato: ")
+  console.log(alreadyScanned)
     clearInputID()
 }
 
@@ -708,9 +709,9 @@ function loadingStatus(){
 function checkValue(ID){
 
   //ID = document.getElementById("ID").value;
-  //console.log(ID)
+  console.log(ID)
   
-	if(ID == ''){
+if(ID == ''){
   
   	//niente
     
@@ -727,13 +728,13 @@ function checkValue(ID){
     
   }else if (maggiorenni.includes(ID) ||  minorenni.includes(ID)){
   
-    //console.log('entra')
+    console.log('entra')
     
     //change response
     document.getElementById("response").style.color = "green"
     document.getElementById("response").innerHTML  = 'entra'
     
-		loadingStatus()
+loadingStatus()
     
     store()
     setTimeout(claerResponse, 2500)
