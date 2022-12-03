@@ -709,7 +709,7 @@ function loadingStatus(){
 function checkValue(ID){
 
   //ID = document.getElementById("ID").value;
-  console.log(ID)
+  console.log('validando: ' +ID)
   
 if(ID == ''){
   
@@ -718,7 +718,7 @@ if(ID == ''){
   }else if (alreadyScanned.includes(ID)){
   
     //console.log('già scannerizzato')
-    clearInputID()
+    //clearInputID()
     
     //change response
     document.getElementById("response").style.color = "red"
@@ -736,7 +736,7 @@ if(ID == ''){
     
 loadingStatus()
     
-    //store()
+    store()
     setTimeout(claerResponse, 2500)
     
   }else if(premium.includes(ID)){
@@ -748,7 +748,7 @@ loadingStatus()
     document.getElementById("response").innerHTML  = 'entra: premium'
     loadingStatus()
     
-    //store()
+    store()
     setTimeout(claerResponse, 2500)
     
   }else{
@@ -759,7 +759,7 @@ loadingStatus()
     document.getElementById("response").innerHTML  = 'non valido, riscannerizza'
     
     setTimeout(claerResponse, 2500)
-    clearInputID()
+    //clearInputID()
     //console.log(ID)
     
   }
