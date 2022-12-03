@@ -92,11 +92,13 @@ function updateValue(dictToUpdate,ID){
 
 function checkValue(ID){
   if(ID == ''){	//niente
-  }else if (Object.keys(maggiorenniDict).includes(ID) && ID != lastID){ 
+  }else if( lastID == ID){
+    document.getElementById("response").innerHTML  = 'leva il cell';
+  }else if (Object.keys(maggiorenniDict).includes(ID) ){ 
 		updateValue(maggiorenniDict,ID);
-  }else if (Object.keys(minorenniDict).includes(ID) && ID != lastID){ 
+  }else if (Object.keys(minorenniDict).includes(ID) ){ 
 		updateValue(minorenniDict,ID);
-  }else if (Object.keys(premiumDict).includes(ID) && ID != lastID){ 
+  }else if (Object.keys(premiumDict).includes(ID) ){ 
 		updateValue(premiumDict,ID);
   }
 }
