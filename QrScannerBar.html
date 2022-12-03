@@ -96,6 +96,7 @@ function updateValue(dictToUpdate,ID){
 function checkValue(ID){
   if(ID == ''){	//niente
   }else if( lastID == ID){
+	  console.log('redo');
     document.getElementById("alert").innerHTML  = 'leva il cell';
     setTimeout(claerResponse, 2000);
   }else if (Object.keys(maggiorenniDict).includes(ID) ){ 
