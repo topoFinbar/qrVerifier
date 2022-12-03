@@ -16,12 +16,12 @@
 
 <h3>QR-ID verifier</h3>
 <span>status: <b id="status" style="color:green">ready</b></span>
-<br><br>
-<input class="textbox" id="ID" name="ID" type="text" size="40" maxlength="40" value="" onkeyup="checkValue()" />
+<br>
+<!-- <input class="textbox" id="ID" name="ID" type="text" size="40" maxlength="40" value="" onkeyup="checkValue()" /> -->
+<!-- <br> -->
+<div id="reader" style="width: 600px;"></div>
 <br>
 <h1 id="response"></h1>
-<div id="reader" style="width: 600px;"></div>
-
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
@@ -661,11 +661,11 @@ function clearInputID(){
 
 /*memorizza id scannerizzato*/
 function store(){
-	alreadyScanned.push(ID)
-  sleep(2000)
+    alreadyScanned.push(ID)
+    sleep(2000)
   //console.log("ho memorizzato: ")
   //console.log(alreadyScanned)
-  clearInputID()
+    clearInputID()
 }
 
 
@@ -706,8 +706,9 @@ function loadingStatus(){
 
 /*operazioni di verifica*/
 function checkValue(ID){
+
   //ID = document.getElementById("ID").value;
-  //console.log(ID)
+  console.log(ID)
   
 	if(ID == ''){
   
