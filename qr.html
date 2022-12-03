@@ -661,12 +661,12 @@ function clearInputID(){
 }
 
 /*memorizza id scannerizzato*/
-function store(){
-    alreadyScanned.push(ID)
+function store(scenned){
+    alreadyScanned.push(scenned)
     sleep(2000)
   console.log("ho memorizzato: ")
   console.log(alreadyScanned)
-    clearInputID()
+    //clearInputID()
 }
 
 
@@ -736,7 +736,7 @@ if(ID == ''){
     
 loadingStatus()
     
-    //store()
+    store(ID)
     setTimeout(claerResponse, 2500)
     
   }else if(premium.includes(ID)){
@@ -748,7 +748,7 @@ loadingStatus()
     document.getElementById("response").innerHTML  = 'entra: premium'
     loadingStatus()
     
-    //store()
+    store(ID)
     setTimeout(claerResponse, 2500)
     
   }else{
