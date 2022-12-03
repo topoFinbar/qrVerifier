@@ -84,6 +84,8 @@ function updateValue(dictToUpdate,ID){
 	//console.log(dictToUpdate[ID]);
 	document.getElementById("response").innerHTML  = dictToUpdate[ID];
   sleep(1500);
+	loadingStatus()
+  setTimeout(claerResponse, 2000)
 	//add sleep time to give it time to memorize it
 }
 
@@ -92,16 +94,10 @@ function checkValue(ID){
   if(ID == ''){	//niente
   }else if (Object.keys(maggiorenniDict).includes(ID)){ 
 		updateValue(maggiorenniDict,ID);
-	  loadingStatus()
-    setTimeout(claerResponse, 2000)
   }else if (Object.keys(minorenniDict).includes(ID)){ 
 		updateValue(minorenniDict,ID);
-	  loadingStatus()
-    setTimeout(claerResponse, 2000)
   }else if (Object.keys(premiumDict).includes(ID)){ 
 		updateValue(premiumDict,ID);
-	  loadingStatus()
-    setTimeout(claerResponse, 2000)
   }
 }
 
