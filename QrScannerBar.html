@@ -39,7 +39,7 @@ scanner.render(success, error);
 function success(result){
   //console.log('result: ' + result);
   checkValue(result);
-  scanner.clear();
+  scanner.stop();
 }
 
 
@@ -72,7 +72,8 @@ function claerResponse() {
     lastID = '';
     //change status
     document.getElementById("status").innerHTML = "ready"
-    document.getElementById("status").style.color = "green"
+    document.getElementById("status").style.color = "green";
+    scanner.start();
 }
 
 
@@ -87,15 +88,16 @@ function updateValue(dictToUpdate,ID){
   lastID = ID;
 	dictToUpdate[ID] = dictToUpdate[ID] + 1
 	document.getElementById("response").innerHTML  = dictToUpdate[ID];
+
+	loadingStatus();
   sleep(2500);
-	loadingStatus()
   claerResponse();
 }
 
 
 function checkValue(ID){
   if(ID == ''){	//niente
-  }else if( lastID == ID){
+  }else if(lastID == ID){
     console.log('redo');
     document.getElementById("alert").innerHTML  = 'leva il cell';
     claerResponse();
