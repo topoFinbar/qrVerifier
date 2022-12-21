@@ -315,6 +315,13 @@ function genrateQR(text){
 }
 
 
+
+//****************************************
+function copyText(text){
+  navigator.clipboard.writeText(text);
+}
+
+
 //****************************************imgMaggiorenni
 function generaNinviti(){
 
@@ -330,6 +337,7 @@ function generaNinviti(){
   }
 
   genrateQR(arrayLink);
+  copyText(arrayLink);
   counter.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
   scrivi(counter);
 
