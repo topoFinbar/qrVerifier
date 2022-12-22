@@ -5,33 +5,58 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>A Basic HTML5 Template</title>
+  <title>scanner ingresso</title>
   <meta name="description" content="A simple HTML5 Template for new projects.">
   <meta name="author" content="SitePoint">
+
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="docs/assets/img/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="docs/assets/img/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="docs/assets/img/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="docs/assets/img/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="docs/assets/img/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="docs/assets/img/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="docs/assets/img/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="docs/assets/img/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="docs/assets/img/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="docs/assets/img/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="docs/assets/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="docs/assets/img/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="docs/assets/img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="docs/assets/img/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="docs/assets/img/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+
+
 
 </head>
 
 <body>
-  <!-- your content here... -->
 
 <h3>QR-ID verifier</h3>
-<h2 style='color: purple'>
-    entrati: <span id='countEntrati'>-</span>
-    </h2>
+
+
+<h2 style='color: purple; margin-left:70%;'>
+    entrati: <span id='countEntrati'>0</span>
+</h2>
+<button style="padding:3%; margin-left:90%;" onclick="countValidId()">+1</button>
+<br><br>
+
 <span>status: <b id="status" style="color:green">ready</b></span>
-<br>
-<!-- <input class="textbox" id="ID" name="ID" type="text" size="40" maxlength="40" value="" onkeyup="checkValue()" /> -->
-<!-- <br> -->
+<br><br>
+
 <div id="reader" style="width: 600px;"></div>
 <br>
+
 <h1 id="response"></h1>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
-  	<script>
 
 
-
+<script>
 
 //*********************************************** const
 
@@ -251,69 +276,18 @@ var alreadyScanned = [];  //dove memorizzo gli id già entrati
 
 
 
-//*********************************************** JSON part
+//*********************************************** counter JSON
 
-const binID = '6387a1b5a3c728450edbc295'
-const APIkey = '$2b$10$0lIjtL1PFHpXsLROKTMsmuUMxBDrH4Qi7eMNCJkr04kv2mUfEGwfu'
-
-let read = new XMLHttpRequest();
-let req = new XMLHttpRequest();
-
-
-//1GET e leggiamo quale elemento dell'array prendere
-function leggi() {
-	var myArr = [];
-
-  read.onreadystatechange = () => {
-    if (read.readyState == XMLHttpRequest.DONE) {
-      //console.log(req.responseText);
-      myArr = JSON.parse(read.responseText);
-      //contatoreJson = myArr.record.minorenni;
-      //console.log("ho letto");
-      //console.log(myArr)
-      
-    }
-  };
-  
-  read.open("GET", "https://api.jsonbin.io/v3/b/" + binID + "/latest", false);
-  read.setRequestHeader("X-Master-Key", APIkey);
-  read.send();
-  
-  return myArr.record.entrati;
-}
-
-//3PUT della get + 1
-function scrivi(counterUP) {
-
-
-  req.onreadystatechange = () => {
-    if (req.readyState == XMLHttpRequest.DONE) {
-      //console.log("scrivo");
-    }
-  };
-
-
-  req.open("PUT", "https://api.jsonbin.io/v3/b/" + binID, false);
-  req.setRequestHeader("Content-Type", "application/json");
-  req.setRequestHeader("X-Master-Key", APIkey);
-  req.send(
-  	'{"entrati":' + counterUP + '}'
-    );
-
-}
-
-/*counter JSON*/
 function countValidId(){
-	
-  var enterUP = leggi() + 1;
-  //console.log(enterUP)
-  scrivi(enterUP);
-  document.getElementById("countEntrati").innerHTML  = (enterUP)/2;
 
+    document.getElementById("countEntrati").innerHTML  = Number(document.getElementById("countEntrati").innerHTML) + 1;
 
 }
 
 //***********************************************
+
+
+
 
 
 
@@ -348,6 +322,9 @@ function error(err){
 
 
 //***********************************************
+
+
+
 
 
 
@@ -403,7 +380,10 @@ function loadingStatus(){
 
 
 
-//*********************************************** varifier
+
+
+
+//*********************************************** verifier
 
 
 /*operazioni di verifica*/
