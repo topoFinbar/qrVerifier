@@ -1,0 +1,273 @@
+<!doctype html>
+
+<html lang="it">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Vanvitroll Dispatcher</title>
+  <meta name="qrDispatcher" content="qrDispatcher">
+  <meta name="gio" content="qrDispatcher">
+
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="favi/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="favi/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="favi/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="favi/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="favi/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="favi/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="favi/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="favi/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="favi/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="favi/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favi/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="favi/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favi/favicon-16x16.png">
+  <link rel="manifest" href="favi/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="favi/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+
+
+  <style>
+
+    a:link {
+      color: green;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    a:visited {
+      color: purple;
+      background-color: transparent;
+      text-decoration: none;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      width: 40%;
+      border-radius: 5%;
+
+      width: 300px;
+      align-self: center;
+      border-top: 100px;
+      margin: auto;
+      text-align: center;
+
+    }
+
+    .container {
+      padding: 30px 30px;
+      text-align: center;
+
+      
+      font-size: large;
+    }
+
+    h1{
+      align-self: center;
+      border-top: 100px;
+      margin: auto;
+      text-align: center;
+      padding: 8%;
+    }
+
+    button{
+      padding: 8px;
+      text-align: center;
+      width:90px;
+      border-radius: 8px;
+    }
+
+  </style>
+
+
+
+</head>
+<body>
+
+<h1>Dispatcher</h1>
+
+
+<div class="card" style="background-color: rgba(238, 202, 2, 0.842)">
+  <div class="container">
+
+    <h1>Pista</h1>
+
+    <p>Già generati: <span id="giaGeneratiP"></span></p>
+    <label for="num" >Numero inviti da generare</label>
+    <input type="number" id="numeroInvitiP" name="numeroInviti" style="padding:2%">
+    <br><br>
+    <button type="submit" value="genera N inviti" onclick="generaNinvitiPista();">GO</button>
+    <br><br>
+
+  </div>
+</div>
+
+<br>
+
+<div class="card" style="background-color: purple">
+  <div class="container">
+
+    <h1>Tavolo</h1>
+
+    <p>Già generati: <span id="giaGeneratiT"></span></p>
+    <label for="num" >Numero inviti da generare</label>
+    <input type="number" id="numeroInvitiT" name="numeroInviti" style="padding:2%">
+    <br><br>
+    <button style='padding: 3%' type="submit" value="genera N inviti" onclick="generaNinvitiTavolo();">GO</button>
+    <br><br>
+    
+  </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+
+const imgPista = [
+'https://drive.google.com/file/d/15_tRvepDx-OA5dSlxDR3G_KkzbeHsl4J/view?usp=sharing',
+'https://drive.google.com/file/d/11llKBeDGzQB0_mbvWQAq8qV9bcJgJqHY/view?usp=sharing',
+'https://drive.google.com/file/d/16gU21egUogj8ONCxS_Z1Rt6e5Ifa1ygi/view?usp=sharing',
+'https://drive.google.com/file/d/11jS5UnBQT1KQS896oVApabRuOhC92qF3/view?usp=sharing',
+
+];
+
+
+const imgTavolo = [
+'https://drive.google.com/file/d/15_tRvepDx-OA5dSlxDR3G_KkzbeHsl4J/view?usp=sharing',
+'https://drive.google.com/file/d/11llKBeDGzQB0_mbvWQAq8qV9bcJgJqHY/view?usp=sharing',
+'https://drive.google.com/file/d/16gU21egUogj8ONCxS_Z1Rt6e5Ifa1ygi/view?usp=sharing',
+'https://drive.google.com/file/d/11jS5UnBQT1KQS896oVApabRuOhC92qF3/view?usp=sharing',
+
+];
+
+
+const binIDP = '65abab0d1f5677401f21c114'
+const binIDT = '65abab161f5677401f21c11b'
+const APIkey = '$2b$10$6CtIO5p0SU6zcCooett5Z.9TVW8JhBCF9pJvIsPSZ9WwEH6edEvFG'
+
+let read = new XMLHttpRequest();
+let req = new XMLHttpRequest();
+
+//sarà il puntatore all'elemento dell'array da stampare
+var counterT = []; 
+var counterP = []; 
+
+var istruzioni = "Ecco gli inviti per il tuo Vanvitroll Party!\n\nCome funziona?\nOgni singolo link contiene l'immagine di un singolo invito\n contenente il personale QRcode da scannerizzare all'ingresso:\n non importa quale link a quale persona, l'importante è che sia un link a testa!\n\n"
+
+
+//*********************************1) GET e leggiamo quale elemento dell'array prendere*********************************//
+function leggi(binID) {
+	var myArr = [];
+
+  read.onreadystatechange = () => {
+    if (read.readyState == XMLHttpRequest.DONE) {
+      //console.log(req.responseText);
+      myArr = JSON.parse(read.responseText);
+      //contatoreJson = myArr.record.minorenni;
+      //console.log("ho letto");
+      
+    }
+  };
+  
+  read.open("GET", "https://api.jsonbin.io/v3/b/" + binID + "/latest", false);
+  read.setRequestHeader("X-Master-Key", APIkey);
+  read.send();
+  
+  return myArr;
+}
+
+
+//*********************************3) PUT della get + 1*********************************//
+function scrivi(counterUP, binID) {
+
+  req.onreadystatechange = () => {
+    if (req.readyState == XMLHttpRequest.DONE) {
+      console.log(counterUP.record.maggiorenni);
+    }
+  };
+
+
+  req.open("PUT", "https://api.jsonbin.io/v3/b/" + binID, false);
+  req.setRequestHeader("Content-Type", "application/json");
+  req.setRequestHeader("X-Master-Key", APIkey);
+  req.send('{"maggiorenni":' + counterUP.record.maggiorenni + '}');
+
+}
+
+
+//*********************************copy invite*********************************//
+function copyText(text){
+  navigator.clipboard.writeText(istruzioni + text);
+}
+
+
+//*********************************pista*********************************//
+function generaNinvitiPista(){
+
+  let N = Number(document.getElementById('numeroInvitiP').value);        //leggo quanti link generare
+  counterP = leggi(binIDP);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
+  contatore = Number(counterP.record.maggiorenni);
+
+  let arrayLink = '';
+
+  for (let i = contatore; i<(contatore + N); i++){                       //appendi il risultato
+    arrayLink += 'invito ' + (i+1) + ': ' + imgPista[i] + ',\n';
+  }
+
+  copyText(arrayLink);
+  counterP.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
+  scrivi(counterP, binIDP);
+
+  alert(N + " inviti Pista copiati!");
+
+}
+
+
+//*********************************tavolo*********************************//
+function generaNinvitiTavolo(){
+
+let N = Number(document.getElementById('numeroInvitiT').value);        //leggo quanti link generare
+counterT = leggi(binIDT);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
+contatore = Number(counterT.record.maggiorenni);
+
+let arrayLink = '';
+
+for (let i = contatore; i<(contatore + N); i++){                       //appendi il risultato
+  arrayLink += 'invito ' + (i+1) + ': ' + imgTavolo[i] + ',\n';
+}
+
+copyText(arrayLink);
+counterT.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
+scrivi(counterT, binIDT);
+
+alert(N + " inviti Tavolo copiati!");
+
+}
+
+
+function showPGenerati(){
+  let a = leggi(binIDP);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
+  let num = Number(a.record.maggiorenni);
+  document.getElementById("giaGeneratiP").innerHTML += num;
+}
+showPGenerati();
+
+function showTGenerati(){
+  let a = leggi(binIDT);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
+  let num = Number(a.record.maggiorenni);
+  document.getElementById("giaGeneratiT").innerHTML += num;
+}
+showTGenerati();
+
+
+</script>
+
+</body>
+</html>

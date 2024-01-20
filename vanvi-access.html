@@ -1,0 +1,192 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Vanvitroll Scanner</title>
+  <meta name="description" content="A simple HTML5 Template for new projects.">
+  <meta name="author" content="SitePoint">
+
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="favi/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="favi/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="favi/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="favi/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="favi/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="favi/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="favi/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="favi/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="favi/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="favi/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favi/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="favi/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favi/favicon-16x16.png">
+  <link rel="manifest" href="favi/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="favi/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+
+  <style>
+    body{
+      background-color: whitesmoke;
+    }
+  </style>
+
+
+</head>
+
+<body>
+
+  <h1>Scanner</h1>
+
+  <span>entrati: 
+    <b id='countEntrati'>
+      0
+    </b>
+  </span>
+  <br><br>
+  <div id="qr-reader" style="width: 600px"></div>
+  <br>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+
+
+<script>
+
+
+
+//*********************************************** const ***********************************************//
+
+const pista = [//'0b15e3aa-0145-5934-a53a-1598584e2bf5',
+ '66b42aa3-447b-53ec-aa80-fc623d985d7a',
+ '7f966c7b-5e73-500a-8527-1aa8af529cce',
+ 'c86b0f12-a633-58f0-a315-ae9d73196714',
+ 'dae8ab87-1782-5cf1-b0df-cae7b4ce898e',
+ '2ec050c4-1b23-5973-b4db-1795ec930dbb',
+ '7ac45040-50cb-5a89-931f-f54b52c3436a'
+];
+
+const tavolo = ['0b15e3aa-0145-5934-a53a-1598584e2bf5',
+ '66b42aa3-447b-53ec-aa80-fc623d985d7a',
+ '7f966c7b-5e73-500a-8527-1aa8af529cce',
+ 'c86b0f12-a633-58f0-a315-ae9d73196714',
+ 'dae8ab87-1782-5cf1-b0df-cae7b4ce898e',
+ '2ec050c4-1b23-5973-b4db-1795ec930dbb',
+ '7ac45040-50cb-5a89-931f-f54b52c3436a'
+];
+ 
+var alreadyScanned = [];  //dove memorizzo gli id già entrati
+
+
+
+//*********************************************** counter JSON ***********************************************//
+
+function countValidId(){
+
+    document.getElementById("countEntrati").innerHTML  = Number(document.getElementById("countEntrati").innerHTML) + 1;
+
+}
+
+//*********************************************** qr scanner part ***********************************************//
+//https://minhazav.medium.com/qr-and-barcode-scanner-using-html-and-javascript-2cdc937f793d
+
+function onScanSuccess(decodedText, decodedResult) {
+     console.log(`Code scanned = ${decodedText}`, decodedResult);
+     checkValue(decodedText);
+}
+var html5QrcodeScanner = new Html5QrcodeScanner(
+  "qr-reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess);
+
+//*********************************************** tools ***********************************************//
+
+
+/*memorizza id scannerizzato*/
+function store(id){
+  alreadyScanned.push(id);
+  countValidId();
+  //sleep(2000);
+}
+
+/*tempo per memorizzare*/
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
+
+function claerResponse() {
+		//change response
+    document.body.style.backgroundColor = "whitesmoke";
+
+}
+
+
+
+
+
+//*********************************************** verifier (senza stato) ***********************************************//
+
+let attesa = 1000;
+
+/*operazioni di verifica*/
+function checkValue(ID){
+
+  if(ID == ''){
+
+  	//niente
+
+  }
+  else if (alreadyScanned.includes(ID) ){ 
+    
+    //change response
+    document.body.style.backgroundColor = "rgb(249, 61, 14)";//red
+
+  }
+  else if (pista.includes(ID) ){
+    
+    //change response
+    document.body.style.backgroundColor = "rgb(144, 239, 0)";//green
+    sleep(attesa);
+    store(ID);
+
+  }
+  else if(tavolo.includes(ID)){
+
+    //change response
+    document.body.style.backgroundColor = "rgb(136, 13, 231)";//purple
+    sleep(attesa);
+    store(ID);
+
+  }
+  else{
+
+    //change response
+    document.body.style.backgroundColor = "rgb(249, 61, 14)";//red
+
+  }
+  setTimeout(claerResponse, attesa);
+
+
+}
+
+//*********************************************** avoiding reload ***********************************************//
+
+window.onbeforeunload = function() {
+  return "Se ricarichi la pagina, perderai gli id memorizzati!";
+}
+
+
+
+
+
+
+	</script>
+</body>
+</html>
