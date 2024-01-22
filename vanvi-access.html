@@ -33,6 +33,7 @@
     body{
       background-color: whitesmoke;
     }
+
   </style>
 
 
@@ -42,11 +43,11 @@
 
   <h1>Scanner</h1>
 
-  <span>entrati: 
+  <h2 style="padding: 3%;">entrati: 
     <b id='countEntrati'>
       0
     </b>
-  </span>
+  </h2>
   <br><br>
   <div id="qr-reader" style="width: 600px"></div>
   <br>
@@ -60,7 +61,7 @@
 
 //*********************************************** const ***********************************************//
 
-const pista = [//'0b15e3aa-0145-5934-a53a-1598584e2bf5',
+const pista = ['0b15e3aa-0145-5934-a53a-1598584e2bf5',
  '66b42aa3-447b-53ec-aa80-fc623d985d7a',
  '7f966c7b-5e73-500a-8527-1aa8af529cce',
  'c86b0f12-a633-58f0-a315-ae9d73196714',
@@ -69,7 +70,7 @@ const pista = [//'0b15e3aa-0145-5934-a53a-1598584e2bf5',
  '7ac45040-50cb-5a89-931f-f54b52c3436a'
 ];
 
-const tavolo = ['0b15e3aa-0145-5934-a53a-1598584e2bf5',
+const tavolo = [//'0b15e3aa-0145-5934-a53a-1598584e2bf5',
  '66b42aa3-447b-53ec-aa80-fc623d985d7a',
  '7f966c7b-5e73-500a-8527-1aa8af529cce',
  'c86b0f12-a633-58f0-a315-ae9d73196714',
@@ -85,8 +86,8 @@ var alreadyScanned = [];  //dove memorizzo gli id già entrati
 //*********************************************** counter JSON ***********************************************//
 
 function countValidId(){
-
-    document.getElementById("countEntrati").innerHTML  = Number(document.getElementById("countEntrati").innerHTML) + 1;
+  
+    document.getElementById("countEntrati").innerHTML  = alreadyScanned.length;
 
 }
 
@@ -94,7 +95,7 @@ function countValidId(){
 //https://minhazav.medium.com/qr-and-barcode-scanner-using-html-and-javascript-2cdc937f793d
 
 function onScanSuccess(decodedText, decodedResult) {
-     console.log(`Code scanned = ${decodedText}`, decodedResult);
+     //console.log(`Code scanned = ${decodedText}`, decodedResult);
      checkValue(decodedText);
 }
 var html5QrcodeScanner = new Html5QrcodeScanner(
@@ -106,22 +107,29 @@ html5QrcodeScanner.render(onScanSuccess);
 
 /*memorizza id scannerizzato*/
 function store(id){
-  alreadyScanned.push(id);
-  countValidId();
-  //sleep(2000);
+
+  if(alreadyScanned.includes(id)){
+    //non aggiungere di nuovo lo stesso id
+  }
+  else{
+    alreadyScanned.push(id);
+    countValidId();
+    //sleep(2000);
+  }
+
 }
 
-/*tempo per memorizzare*/
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
+/*tempo per mostrare la risposta dopo la lettura QR*/
+function sleep(ms) {
+
+  //https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+  return new Promise(resolve => setTimeout(resolve, ms));
+
 }
 
-
+/*ripristina lo stato in "in attesa di qr" */
 function claerResponse() {
+
 		//change response
     document.body.style.backgroundColor = "whitesmoke";
 
@@ -136,7 +144,7 @@ function claerResponse() {
 let attesa = 1000;
 
 /*operazioni di verifica*/
-function checkValue(ID){
+async function checkValue(ID){
 
   if(ID == ''){
 
@@ -153,7 +161,7 @@ function checkValue(ID){
     
     //change response
     document.body.style.backgroundColor = "rgb(144, 239, 0)";//green
-    sleep(attesa);
+    await sleep(attesa);
     store(ID);
 
   }
@@ -161,17 +169,12 @@ function checkValue(ID){
 
     //change response
     document.body.style.backgroundColor = "rgb(136, 13, 231)";//purple
-    sleep(attesa);
+    await sleep(attesa);
     store(ID);
 
   }
-  else{
-
-    //change response
-    document.body.style.backgroundColor = "rgb(249, 61, 14)";//red
-
-  }
   setTimeout(claerResponse, attesa);
+
 
 
 }
@@ -179,7 +182,9 @@ function checkValue(ID){
 //*********************************************** avoiding reload ***********************************************//
 
 window.onbeforeunload = function() {
+
   return "Se ricarichi la pagina, perderai gli id memorizzati!";
+
 }
 
 
