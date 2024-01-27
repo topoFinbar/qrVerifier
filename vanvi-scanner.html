@@ -43,12 +43,16 @@
 
   <h1>Scanner</h1>
 
-  <h2 style="padding: 3%;">entrati: 
-    <b id='countEntrati'>
+  <h2 style="padding-top: 3%;">Pista entrati: 
+    <b id='countEntratiP'>
       0
     </b>
   </h2>
-  <br><br>
+  <h2 style="padding-bottom: 3%;">Tavolo entrati: 
+    <b id='countEntratiT'>
+      0
+    </b>
+  </h2>
   <div id="qr-reader" style="width: 600px"></div>
   <br>
   <script src="https://unpkg.com/html5-qrcode"></script>
@@ -1975,18 +1979,30 @@ var alreadyScanned = [];  //dove memorizzo gli id già entrati
 
 //*********************************************** counter JSON ***********************************************//
 
-function countValidId(){
+function countValidId(tipo){
   
-    document.getElementById("countEntrati").innerHTML  = alreadyScanned.length;
+    if( tipo == 't'){
+      document.getElementById("countEntratiT").innerHTML = Number(document.getElementById("countEntratiP").innerHTML) + 1;//alreadyScanned.length;
+    }
+    else{
+      document.getElementById("countEntratiP").innerHTML = Number(document.getElementById("countEntratiP").innerHTML) + 1;//alreadyScanned.length;
+    }
+
 
 }
 
 //*********************************************** qr scanner part ***********************************************//
 //https://minhazav.medium.com/qr-and-barcode-scanner-using-html-and-javascript-2cdc937f793d
 
+let lastScannedID = '';
+
 function onScanSuccess(decodedText, decodedResult) {
-     //console.log(`Code scanned = ${decodedText}`, decodedResult);
-     checkValue(decodedText);
+    //console.log(`Code scanned = ${decodedText}`, decodedResult);
+    if(lastScannedID != decodedText){
+      checkValue(decodedText);
+      lastScannedID = decodedText;
+    }
+
 }
 var html5QrcodeScanner = new Html5QrcodeScanner(
   "qr-reader", { fps: 10, qrbox: 250 });
@@ -1996,16 +2012,11 @@ html5QrcodeScanner.render(onScanSuccess);
 
 
 /*memorizza id scannerizzato*/
-function store(id){
-
-  if(alreadyScanned.includes(id)){
-    //non aggiungere di nuovo lo stesso id
-  }
-  else{
+function store(id, tipo){
+  
     alreadyScanned.push(id);
-    countValidId();
+    countValidId(tipo);
     //sleep(2000);
-  }
 
 }
 
@@ -2052,7 +2063,8 @@ async function checkValue(ID){
     //change response
     document.body.style.backgroundColor = "rgb(144, 239, 0)";//green
     await sleep(attesa);
-    store(ID);
+    store(ID, 0);
+    alert("PISTA");
 
   }
   else if(tavolo.includes(ID)){
@@ -2060,7 +2072,14 @@ async function checkValue(ID){
     //change response
     document.body.style.backgroundColor = "rgb(136, 13, 231)";//purple
     await sleep(attesa);
-    store(ID);
+    store(ID, 't');
+    alert("TAVOLO");
+
+  }
+  else{
+
+    //change response
+    document.body.style.backgroundColor = "rgb(249, 61, 14)";//red
 
   }
   setTimeout(claerResponse, attesa);
