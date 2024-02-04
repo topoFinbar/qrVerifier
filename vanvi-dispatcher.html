@@ -2102,12 +2102,6 @@ function scrivi(counterUP, binID) {
 }
 
 
-//*********************************copy invite*********************************//
-function copyText(text){
-  navigator.clipboard.writeText(istruzioni + text);
-}
-
-
 //*********************************pista*********************************//
 function generaNinvitiPista(){
 
@@ -2121,11 +2115,17 @@ function generaNinvitiPista(){
     arrayLink += 'invito ' + (i+1) + ': ' + imgPista[i] + ',\n';
   }
 
-  copyText(arrayLink);
+  (() => {
+  navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
+  })();
+  //navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
+
   counterP.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
   scrivi(counterP, binIDP);
 
   alert(N + " inviti Pista copiati!");
+  showPGenerati();
+
 
 }
 
@@ -2143,11 +2143,17 @@ for (let i = contatore; i<(contatore + N); i++){                       //appendi
   arrayLink += 'invito ' + (i+1) + ': ' + imgTavolo[i] + ',\n';
 }
 
-copyText(arrayLink);
+(() => {
+  navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
+})();
+//navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
+
 counterT.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
 scrivi(counterT, binIDT);
 
 alert(N + " inviti Tavolo copiati!");
+showTGenerati();
+
 
 }
 
@@ -2155,6 +2161,7 @@ alert(N + " inviti Tavolo copiati!");
 function showPGenerati(){
   let a = leggi(binIDP);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
   let num = Number(a.record.maggiorenni);
+  document.getElementById("giaGeneratiP").innerHTML = '';
   document.getElementById("giaGeneratiP").innerHTML += num;
 }
 showPGenerati();
@@ -2162,6 +2169,7 @@ showPGenerati();
 function showTGenerati(){
   let a = leggi(binIDT);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
   let num = Number(a.record.maggiorenni);
+  document.getElementById("giaGeneratiT").innerHTML = '';
   document.getElementById("giaGeneratiT").innerHTML += num;
 }
 showTGenerati();
