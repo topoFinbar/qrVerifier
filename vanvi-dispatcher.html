@@ -125,6 +125,16 @@
 </div>
 
 
+<div class="card" style="background-color: whitesmoke; border-color: black;">
+  <div class="container">
+
+    <h2>Testo da copiare</h2>
+
+    <textarea id="textArea" onclick="this.select();"></textarea>
+    
+  </div>
+</div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -2105,10 +2115,6 @@ function scrivi(counterUP, binID) {
 //*********************************pista*********************************//
 function generaNinvitiPista(){
 
-  (() => {
-  navigator.clipboard.writeText(" ");                 //reset clipboard
-  })();
-
   let N = Number(document.getElementById('numeroInvitiP').value);        //leggo quanti link generare
   counterP = leggi(binIDP);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
   contatore = Number(counterP.record.maggiorenni);
@@ -2120,7 +2126,8 @@ function generaNinvitiPista(){
   }
 
   (() => {
-  navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
+    //navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
+    document.getElementById('textArea').innerHTML = istruzioni + arrayLink;
   })();
 
   counterP.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
@@ -2136,10 +2143,6 @@ function generaNinvitiPista(){
 //*********************************tavolo*********************************//
 function generaNinvitiTavolo(){
 
-  (() => {
-  navigator.clipboard.writeText(" ");                 //reset clipboard
-  })();
-
   let N = Number(document.getElementById('numeroInvitiT').value);        //leggo quanti link generare
   counterT = leggi(binIDT);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
   contatore = Number(counterT.record.maggiorenni);
@@ -2151,7 +2154,8 @@ function generaNinvitiTavolo(){
   }
 
   (() => {
-    navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare: https://masteringjs.io/tutorials/fundamentals/iife
+    //navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare: https://masteringjs.io/tutorials/fundamentals/iife
+    document.getElementById('textArea').innerHTML = istruzioni + arrayLink;
   })();
 
   counterT.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
