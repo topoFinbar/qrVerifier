@@ -124,6 +124,7 @@
   </div>
 </div>
 
+<br>
 
 <div class="card" style="background-color: whitesmoke; border-color: black;">
   <div class="container">
@@ -131,7 +132,13 @@
     <h2>Testo da copiare</h2>
 
     <textarea id="textArea" onclick="this.select();" style="height: 200px;"></textarea>
-    
+    <br><br>
+    <!-- <button onclick="textArea.select();">seleziona tutto</button>
+    <br><br> -->
+
+    <button onclick="navigator.clipboard.writeText(textArea.value);">copia</button>
+    <br><br>
+
   </div>
 </div>
 
@@ -2099,7 +2106,7 @@ function scrivi(counterUP, binID) {
 
   req.onreadystatechange = () => {
     if (req.readyState == XMLHttpRequest.DONE) {
-      console.log(counterUP.record.maggiorenni);
+      //console.log(counterUP.record.maggiorenni);
     }
   };
 
