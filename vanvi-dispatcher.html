@@ -87,7 +87,7 @@
 
 
 </head>
-<body>
+<body   allow="clipboard-read; clipboard-write">
 
 <h1>Dispatcher</h1>
 
@@ -2105,6 +2105,10 @@ function scrivi(counterUP, binID) {
 //*********************************pista*********************************//
 function generaNinvitiPista(){
 
+  (() => {
+  navigator.clipboard.writeText(" ");                 //reset clipboard
+  })();
+
   let N = Number(document.getElementById('numeroInvitiP').value);        //leggo quanti link generare
   counterP = leggi(binIDP);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
   contatore = Number(counterP.record.maggiorenni);
@@ -2118,7 +2122,6 @@ function generaNinvitiPista(){
   (() => {
   navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
   })();
-  //navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
 
   counterP.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
   scrivi(counterP, binIDP);
@@ -2133,26 +2136,29 @@ function generaNinvitiPista(){
 //*********************************tavolo*********************************//
 function generaNinvitiTavolo(){
 
-let N = Number(document.getElementById('numeroInvitiT').value);        //leggo quanti link generare
-counterT = leggi(binIDT);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
-contatore = Number(counterT.record.maggiorenni);
+  (() => {
+  navigator.clipboard.writeText(" ");                 //reset clipboard
+  })();
 
-let arrayLink = '';
+  let N = Number(document.getElementById('numeroInvitiT').value);        //leggo quanti link generare
+  counterT = leggi(binIDT);                                                    //leggo quale è l'ultimo link preso, cioè dove si è fermato il contatre l'ultima volta
+  contatore = Number(counterT.record.maggiorenni);
 
-for (let i = contatore; i<(contatore + N); i++){                       //appendi il risultato
-  arrayLink += 'invito ' + (i+1) + ': ' + imgTavolo[i] + ',\n';
-}
+  let arrayLink = '';
 
-(() => {
-  navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
-})();
-//navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare
+  for (let i = contatore; i<(contatore + N); i++){                       //appendi il risultato
+    arrayLink += 'invito ' + (i+1) + ': ' + imgTavolo[i] + ',\n';
+  }
 
-counterT.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
-scrivi(counterT, binIDT);
+  (() => {
+    navigator.clipboard.writeText(istruzioni + arrayLink);                 //copia negli appunti il testo da incollare: https://masteringjs.io/tutorials/fundamentals/iife
+  })();
 
-alert(N + " inviti Tavolo copiati!");
-showTGenerati();
+  counterT.record.maggiorenni =  contatore + Number(N);	                 //aggiorna il counter per il prossimo link
+  scrivi(counterT, binIDT);
+
+  alert(N + " inviti Tavolo copiati!");
+  showTGenerati();
 
 
 }
